@@ -10,11 +10,11 @@ import { ProductCardCarouselFragment } from '~/components/product-card-carousel/
 import { Slideshow } from '~/components/slideshow';
 import { LocaleType } from '~/i18n/routing';
 
-// import { client as makeswiftClient } from '~/lib/makeswift/client';
-// import { defaultLocale } from '~/i18n/routing';
-// import { Page as MakeswiftPage } from '@makeswift/runtime/next';
-// import { notFound } from 'next/navigation';
-// import { getSiteVersion } from '@makeswift/runtime/next/server';
+import { client as makeswiftClient } from '~/lib/makeswift/client';
+import { defaultLocale } from '~/i18n/routing';
+import { Page as MakeswiftPage } from '@makeswift/runtime/next';
+import { notFound } from 'next/navigation';
+import { getSiteVersion } from '@makeswift/runtime/next/server';
 
 const HomePageQuery = graphql(
   `
@@ -62,20 +62,20 @@ export default async function Home({ params: { locale } }: Props) {
   const featuredProducts = removeEdgesAndNodes(data.site.featuredProducts);
   const newestProducts = removeEdgesAndNodes(data.site.newestProducts);
 
-  // const path = `/`;
+  const path = `/`;
 
-  // const snapshot = await makeswiftClient.getPageSnapshot(path, {
-  //   siteVersion: getSiteVersion(),
-  //   locale: locale === defaultLocale ? undefined : locale,
-  // });
+  const snapshot = await makeswiftClient.getPageSnapshot(path, {
+    siteVersion: getSiteVersion(),
+    locale: locale === defaultLocale ? undefined : locale,
+  });
 
-  // if (snapshot == null) return notFound();
+  if (snapshot == null) return notFound();
 
   return (
     <>
       <Slideshow />
 
-      {/* <MakeswiftPage snapshot={snapshot} /> */}
+      <MakeswiftPage snapshot={snapshot} />
 
       <div className="my-10">
         <ProductCardCarousel
